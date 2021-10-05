@@ -7,4 +7,5 @@
 *.elf
 *.map
 *.patch
+tags
 !.gitignore
