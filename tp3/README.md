@@ -31,7 +31,7 @@ Je vous recommande de lire un peu de documentation sur l'assembleur en ligne GCC
 
 ### Question 2
 
-**Écrivez la fonction suivante:**
+* *Écrivez la fonction suivante:**
 
 ```c
 void userland()

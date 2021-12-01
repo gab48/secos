@@ -84,8 +84,8 @@ void gdt_add_tss() {
 
 // Question 2
 void userland() { 
-  asm volatile("mov %cr0, %eax");
-  //printf("Toto ring 3\n");
+  //asm volatile("mov %cr0, %eax");
+  printf("Toto ring 3\n");
 }
 
 void tp() {
@@ -114,7 +114,7 @@ void tp() {
 
   memset(&tss, 0, sizeof(tss));
   tss.s0.esp = get_ebp();
-  tss.s0.ss = gdt_seg_sel(SEG_DATA_R3, RING_0);
+  tss.s0.ss = gdt_seg_sel(SEG_DATA_R0, RING_0);
   set_tr(gdt_seg_sel(SEG_TSS, RING_0));
 
   printf("Userland fct @0x%x\n", &userland);
