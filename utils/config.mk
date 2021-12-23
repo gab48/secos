@@ -32,9 +32,15 @@ core_obj   :=	entry.o \
 		uart.o	\
 		pic.o 	\
 		intr.o	\
-		idt.o	\
+		idt.o	  \
 		excp.o	\
-		stack.o
+		stack.o \
+		segment.o \
+		gdt.o		\
+	  handlers.o\
+	  tss.o		\
+		page.o	\
+		tasks.o	
 
 objects    := $(addprefix $(CORE), $(core_obj))
 

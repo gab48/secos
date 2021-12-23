@@ -25,6 +25,12 @@ SECTIONS
    .data     : { *(.data)                        } : phsetup
    .bss      : { *(.bss COMMON)                  } : phsetup
    /DISCARD/ : { *(.note* .indent .comment)      } : phsetup
+   
+   . = 0x400000;
+   .user1 : {*(.user1)}
+   
+   . = 0x410000;
+   .user2 : {*(.user2)}
 
    __kernel_end__ = .;
 }
