@@ -4,8 +4,7 @@
 #include <intr.h>
 #include <segment.h>
 
-void print_isr() {
-  asm volatile("leave");
+__attribute__((naked)) void print_isr() {
   asm volatile("pusha");
   asm volatile("mov %esp, %eax");
   asm volatile("call print_handler");
@@ -14,14 +13,14 @@ void print_isr() {
 }
 
 void __regparm__(1) print_handler(int_ctx_t *ctx) {
-  debug("Print syscall: %s\n", ctx->gpr.esi);
+  debug("Value: %d\n", *((uint32_t *)(ctx->gpr.eax.raw)));
 }
 
 void set_handler(int index, int seg_idx, int dpl, void *handler) {
   idt_reg_t idtr;
   get_idtr(idtr);
-  debug("IDT addresss: 0x%8x\n", (void *)idtr.desc);
   int_desc_t *id = &idtr.desc[index];
   int_desc(&idtr.desc[index], gdt_krn_seg_sel(seg_idx), (offset_t)handler);
   id->dpl = dpl;
+  id->type = SEG_DESC_SYS_TRAP_GATE_32;
 }

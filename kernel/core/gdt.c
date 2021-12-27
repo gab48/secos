@@ -42,10 +42,10 @@ void gdt_add_tss(tss_t *tss) {
   uint32_t limit = sizeof(*tss);
   set_null_seg(tss_seg);
   tss_seg->limit_1 = limit;
-  tss_seg->limit_2 = (limit & (0xf << 16)) >> 16;
+  tss_seg->limit_2 = limit >> 16;
   tss_seg->base_1 = base;
-  tss_seg->base_2 = (base & (0xf << 16)) >> 16;
-  tss_seg->base_3 = (base & (0xf << 24)) >> 24;
+  tss_seg->base_2 = base >> 16;
+  tss_seg->base_3 = base >> 24;
   tss_seg->type = SEG_DESC_SYS_TSS_AVL_32;
   tss_seg->p = 0b1;
 }
