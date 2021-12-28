@@ -76,8 +76,8 @@ void setup_interruptions() {
   intr_init();
   idt_reg_t idtr;
   get_idtr(idtr);
-  set_handler(IDT_IRQ0_IDX, SEG_CODE_R0, RING_3, task_scheduler);
-  set_handler(IDT_PRINT_HANDLER_IDX, SEG_CODE_R3, RING_3, print_isr);
+  set_handler(IDT_IRQ0_IDX, SEG_CODE_R0, RING_0, SEG_DESC_SYS_INTR_GATE_32, task_scheduler);
+  set_handler(IDT_PRINT_HANDLER_IDX, SEG_CODE_R0, RING_3, SEG_DESC_SYS_TRAP_GATE_32, print_isr);
 }
 
 void setup_paging() {
@@ -90,20 +90,26 @@ void setup_paging() {
   
   set_cr3(pgd_krn);
   //pgd_show(pgd_krn);
-  //pgd_show(pgd_user1);
-  //pgd_show(pgd_user2);
   enable_paging();
 }
+
+void setup_tasks() {
+  tasks_init(&tss);
+  load_task(1, pgd_user1, user1, STACK_R0_US1, STACK_R3_US1);
+  load_task(2, pgd_user2, user2, STACK_R0_US2, STACK_R3_US2);
+}
+
+void start_os() {
+  force_interrupts_on();
+  while(true);
+}
+
 
 void tp() {
   setup_segmentation();
   setup_interruptions();
   setup_paging();
+  setup_tasks();
 
-  tasks_init(&tss);
-  load_task(1, pgd_user1, user1, STACK_R0_US1, STACK_R3_US1);
-  load_task(2, pgd_user2, user2, STACK_R0_US2, STACK_R3_US2);
-
-  force_interrupts_on();
-  while(true){}
+  start_os();
 }

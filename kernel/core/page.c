@@ -17,8 +17,8 @@ void init_krn_page(pde32_t *pgd) {
   memset((void *)pgd, 0, PAGE_SIZE);
   pte32_t *ptb = (pte32_t *)((uint32_t)pgd + 0x1000);
   pte32_t *ptb1 = (pte32_t *)((uint32_t)pgd + 0x2000);
-  int i;
-  for (i = 0; i < 1024; i++) {
+  uint32_t i;
+  for (i = 0; i < PTE32_PER_PT; i++) {
     pg_set_entry(&ptb[i], PG_RW | PG_KRN, i);
     pg_set_entry(&ptb1[i], PG_RW | PG_KRN, i + 1024);
   }
@@ -27,13 +27,13 @@ void init_krn_page(pde32_t *pgd) {
 }
 
 void init_usr_page(pde32_t *pgd, uint32_t base) {
-  int i;
+  uint32_t i;
   int pgd_idx = pd32_idx(base);
   int ptb_idx = pt32_idx(base);
 
   pte32_t *ptb1 = (pte32_t *)((uint32_t)pgd + 0x1000);
   memset((void *)ptb1, 0, PAGE_SIZE);
-  for (i = 0; i < 1024; i++) {
+  for (i = 0; i < PTE32_PER_PT; i++) {
     pg_set_entry(&ptb1[i], PG_RW | PG_USR, i);
   }
   

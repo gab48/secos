@@ -12,5 +12,4 @@ void add_page_shared_memory(pde32_t *pgd, uint32_t* virtual, uint32_t* physical)
 void ptb_show(pte32_t *ptb, uint32_t high_addr);
 void pgd_show(pde32_t *pgd);
 
-
 #endif

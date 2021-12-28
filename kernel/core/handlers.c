@@ -16,11 +16,11 @@ void __regparm__(1) print_handler(int_ctx_t *ctx) {
   debug("Value: %d\n", *((uint32_t *)(ctx->gpr.eax.raw)));
 }
 
-void set_handler(int index, int seg_idx, int dpl, void *handler) {
+void set_handler(int index, int seg_idx, int dpl, uint32_t type, void *handler) {
   idt_reg_t idtr;
   get_idtr(idtr);
   int_desc_t *id = &idtr.desc[index];
   int_desc(&idtr.desc[index], gdt_krn_seg_sel(seg_idx), (offset_t)handler);
   id->dpl = dpl;
-  id->type = SEG_DESC_SYS_TRAP_GATE_32;
+  id->type = type; //SEG_DESC_SYS_TRAP_GATE_32;
 }

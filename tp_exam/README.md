@@ -16,13 +16,13 @@ Permettre un ordonnancement préemptif de 2 tâches (T1 et T2) en ring 3:
    + [DONE] Le noyau est identity mappé
    + [DONE] Les tâches sont identity mappées
    + [DONE] Les tâches possèdent leurs propres PGD/PTB
-   + Les tâches ont une zone de mémoire partagée:
+   + [DONE] Les tâches ont une zone de mémoire partagée:
      - De la taille d'une page (4KB)
      - À l'adresse physique de votre choix [0x420000]
      - À des adresses virtuelles différentes
-   + Les tâches doivent avoir leur propre pile noyau (4KB)
-   + Les tâches doivent avoir leur propre pile utilisateur (4KB)
- - La tâche 1 écrit un compteur (uint32_t) dans la zone de mémoire partagée
+   + [DONE] Les tâches doivent avoir leur propre pile noyau (4KB)
+   + [DONE] Les tâches doivent avoir leur propre pile utilisateur (4KB)
+ - [DONE] La tâche 1 écrit un compteur (uint32_t) dans la zone de mémoire partagée
  - La tâche 2 affiche le compteur depuis la zone de mémoire partagée
  - L'affichage dans la tâche 2 s'effectuera à l'aide d'un appel système:
    + L'interface utilisateur:
